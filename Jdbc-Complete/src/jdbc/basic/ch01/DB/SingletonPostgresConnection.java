@@ -17,29 +17,27 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-public class PostgresConnection {
-    
-    Connection cnn = null;
-    
-    public Connection getConnection()
+public class SingletonPostgresConnection 
+{
+    private static Connection conn = null;
+    static Connection getConnection()
     {
         String url = "jdbc:postgresql://localhost:5432/jdbcfundamentals";
         String user = "postgres";
         String pass = "postgres";
         try
         {
-            Class.forName("org.postgresql.Driver");
-            cnn = DriverManager.getConnection(url, user, pass);
+            Class.forName("org.postgresql.Driver").newInstance();
+            conn = DriverManager.getConnection(url, user, pass);
         }
-        catch(SQLException | ClassNotFoundException ex)
+        catch(ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex)
         {
-            Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SingletonPostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        return cnn;
+         return conn;
     }
     
-    public void disconnect(ResultSet rs, Statement stmt)
+    public static void disconnect(ResultSet rs, Statement stmt)
     {
         if(rs != null)
         {
@@ -65,10 +63,10 @@ public class PostgresConnection {
             }
         }
         
-        if(cnn != null)
+        if(conn != null)
         {
             try {
-                cnn.close();
+                conn.close();
             } catch (SQLException ex) {
                 Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
             }
