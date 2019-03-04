@@ -17,59 +17,60 @@ import java.util.logging.Logger;
  *
  * @author PC
  */
-public class SingletonPostgresConnection 
-{
-    private static Connection conn = null;
-    static Connection getConnection()
-    {
-        String url = "jdbc:postgresql://localhost:5432/jdbcfundamentals";
-        String user = "postgres";
-        String pass = "postgres";
-        try
-        {
-            Class.forName("org.postgresql.Driver").newInstance();
-            conn = DriverManager.getConnection(url, user, pass);
-        }
-        catch(ClassNotFoundException | IllegalAccessException | InstantiationException | SQLException ex)
-        {
+public class SingletonPostgresConnection {
+
+    private static SingletonPostgresConnection instance;
+    private Connection conn = null;
+    String url = "jdbc:postgresql://localhost:5432/jdbcfundamentals";
+    String user = "postgres";
+    String pass = "postgres";
+
+    private SingletonPostgresConnection() {
+        try {
+            Class.forName("org.postgresql.Driver");
+            this.conn = DriverManager.getConnection(url, user, pass);
+        } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(SingletonPostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-         return conn;
     }
-    
-    public static void disconnect(ResultSet rs, Statement stmt)
-    {
-        if(rs != null)
+
+    public Connection getConnection() {
+        return conn;
+    }
+
+    public static SingletonPostgresConnection getInstance() {
+        try 
         {
-            try
+            if (instance == null) 
             {
-                rs.close();
-            }
-            catch(SQLException ex)
+                instance = new SingletonPostgresConnection();
+            } 
+            else if (instance.getConnection().isClosed()) 
             {
-                Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
+                instance = new SingletonPostgresConnection();
             }
         }
-        
-        if(stmt != null)
-        {
-            try
-            {
-                stmt.close();
-            }
-            catch(SQLException ex)
-            {
-                Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        catch (SQLException ex) {
+            Logger.getLogger(SingletonPostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        if(conn != null)
-        {
+        return instance;
+    }
+
+    public static void disconnect(ResultSet rs, Statement stmt) {
+        if (rs != null) {
             try {
-                conn.close();
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
+        if (stmt != null) {
+            try {
+                stmt.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(PostgresConnection.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } 
     }
 }
