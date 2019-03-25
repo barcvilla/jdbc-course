@@ -41,6 +41,7 @@ public class SingletonOracleConnection
     
     public Connection getConnection()
     {
+        getInstance();
         return conn;
     }
     
@@ -64,7 +65,7 @@ public class SingletonOracleConnection
         return instance;
     }
     
-    public static void disconnect(ResultSet rs, Statement stmt)
+    public void disconnect(ResultSet rs, Statement stmt)
     {
         if(rs != null)
         {
