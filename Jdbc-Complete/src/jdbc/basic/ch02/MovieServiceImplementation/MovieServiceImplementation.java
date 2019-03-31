@@ -23,7 +23,7 @@ import jdbc.basic.ch02.service.MovieService;
  */
 public class MovieServiceImplementation implements MovieService{
     private OracleConnection ocon = new OracleConnection();
-    private Connection cnn = null;
+    //private Connection cnn = null;
     private Statement stmt = null;
     private ResultSet rs = null;
     
@@ -32,9 +32,8 @@ public class MovieServiceImplementation implements MovieService{
     public int updateMovie(String sql)
     {
         int count = 0;
-        try
+        try(Connection cnn = ocon.getConnection())
         {
-            cnn = ocon.getConnection();
             stmt = cnn.createStatement();
             count = stmt.executeUpdate(sql);
             
@@ -43,10 +42,12 @@ public class MovieServiceImplementation implements MovieService{
         {
             Logger.getLogger(MovieServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /**
         finally
         {
             ocon.disconnect(rs, stmt);
         }
+        * */
         return count;
     }
     
@@ -56,12 +57,15 @@ public class MovieServiceImplementation implements MovieService{
     {
         String sql = "select * from movies";
         List<Movie> movies = new ArrayList<Movie>();
-        try
+        // Using try - catch with resource. Los objetos dependiente de cnn como Statement y ResultSet se cierran automaticamente
+        try(Connection cnn = ocon.getConnection())
         {
-            cnn = ocon.getConnection();
-            stmt = cnn.createStatement();
-            rs = stmt.executeQuery(sql);
             
+            // 3. Create Statement Object
+            stmt = cnn.createStatement();
+            // 4. Prepare, Send and execute SQL Query
+            rs = stmt.executeQuery(sql);
+            // 5. Process result from ResultSet
             while(rs.next())
             {
                 Movie m = new Movie();
@@ -76,10 +80,12 @@ public class MovieServiceImplementation implements MovieService{
         {
             Logger.getLogger(MovieServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
+        /** Cuando usamos Try-Catch with resources no es necesario cerrar el objeto Connection y otros objetos relacionados
         finally
         {
             ocon.disconnect(rs, stmt);
         }
+        * */
         return movies;
     }
 }

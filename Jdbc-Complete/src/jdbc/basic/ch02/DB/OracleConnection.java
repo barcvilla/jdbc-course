@@ -28,7 +28,9 @@ public class OracleConnection {
         String password = "admin";
         try
         {
+            //1. Load & Register Driver
             Class.forName(driver);
+            // 2. Establish Connection between database
             cnn = DriverManager.getConnection(url, user, password);
         }
         catch(SQLException | ClassNotFoundException ex)
