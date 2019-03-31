@@ -27,6 +27,30 @@ public class MovieServiceImplementation implements MovieService{
     private Statement stmt = null;
     private ResultSet rs = null;
     
+    //Utilizamos executeUpdate() para queries como insert into, update, delete
+    @Override
+    public int updateMovie(String sql)
+    {
+        int count = 0;
+        try
+        {
+            cnn = ocon.getConnection();
+            stmt = cnn.createStatement();
+            count = stmt.executeUpdate(sql);
+            
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(MovieServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally
+        {
+            ocon.disconnect(rs, stmt);
+        }
+        return count;
+    }
+    
+    // utilizamos executeQuery() para operaciones de tipo select
     @Override
     public List<Movie> getAllMovies()
     {

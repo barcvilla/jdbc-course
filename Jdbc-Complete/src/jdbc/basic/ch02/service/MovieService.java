@@ -14,4 +14,5 @@ import jdbc.basic.ch02.domain.Movie;
  */
 public interface MovieService {
     public List<Movie> getAllMovies();
+    public int updateMovie(String sql);
 }
