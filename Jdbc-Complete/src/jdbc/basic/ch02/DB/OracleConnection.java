@@ -40,7 +40,7 @@ public class OracleConnection {
         
         return cnn;
     }
-    
+    /**
     public void disconnect(ResultSet rs, Statement stmt)
     {
         if(rs != null)
@@ -76,4 +76,5 @@ public class OracleConnection {
             }
         }
     }
+    * */
 }
