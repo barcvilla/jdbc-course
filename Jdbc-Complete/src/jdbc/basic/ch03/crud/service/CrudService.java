@@ -12,5 +12,5 @@ package jdbc.basic.ch03.crud.service;
 public interface CrudService {
     public String createEmployeeTable();
     public String dropEmployeeTable();
-    
+    public int insertFixedEmployee();
 }

@@ -25,6 +25,7 @@ public class CrudImplementation implements CrudService{
     private ResultSet rs = null;
     private String sqlQuery = "";
     private String msg = "";
+    private int updateCount = 0;
 
     @Override
     public String createEmployeeTable() {
@@ -56,6 +57,21 @@ public class CrudImplementation implements CrudService{
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return msg;
+    }
+
+    @Override
+    public int insertFixedEmployee() {
+        sqlQuery = "insert into employee values(300, 'Juan', 3000, 'BSAS')";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
     }
     
 }
