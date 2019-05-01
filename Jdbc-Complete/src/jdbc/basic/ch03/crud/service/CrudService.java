@@ -13,4 +13,5 @@ public interface CrudService {
     public String createEmployeeTable();
     public String dropEmployeeTable();
     public int insertFixedEmployee();
+    public void insertDynamicalEmployee(int eno, String ename, double esal, String eaddr);
 }

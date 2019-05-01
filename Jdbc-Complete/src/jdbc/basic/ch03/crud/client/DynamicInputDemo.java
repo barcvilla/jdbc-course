@@ -17,16 +17,24 @@ public class DynamicInputDemo {
         System.out.println("Enter employee number:");
         int eno = sc.nextInt();
         
-        System.out.println("Enter employee name: ");
+        System.out.println("Enter employee name:");
         String ename = sc.next();
         
-        System.out.println("Enter employee salary: ");
+        System.out.println("Enter employee salary:");
         double esal = sc.nextDouble();
         
-        System.out.println("Enter employee address: ");
+        System.out.println("Enter employee address:");
         String eaddr = sc.next();
         
         System.out.println("Informacion ingresada");
-        System.out.println(eno + "\t" + ename + "\t" + esal + "\t" + eaddr);
+        System.out.println(eno + " " + ename + " " + esal + " " + eaddr);
+        
+        String sqlQuery = "insert into employee values(" + eno +", '" + ename +"', " + esal +". '" + eaddr + "')";
+        System.out.println("Hello query with your fixed Input is:");
+        System.out.println(sqlQuery);
+        // %d significa decimal
+        String sqlQuery1 = String.format("insert into employee values(%d, '%s', %f, '%s')", eno, ename, esal, eaddr);
+        System.out.println("Hello query with your Dynamic Input is:");
+        System.out.println(sqlQuery1);
     }
 }

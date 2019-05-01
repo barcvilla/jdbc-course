@@ -73,5 +73,21 @@ public class CrudImplementation implements CrudService{
         }
         return updateCount;
     }
+
+    @Override
+    public void insertDynamicalEmployee(int eno, String ename, double esal, String eaddr) {
+        sqlQuery = "insert into employee values(" + eno + ", '" + ename + "', " + esal + ", '" + eaddr + "')";
+        //sqlQuery = String.format("insert into employee values(%d, '%s', %f, '%s')", eno, ename, esal, eaddr);
+        System.out.println("query: " + sqlQuery);
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
 }
