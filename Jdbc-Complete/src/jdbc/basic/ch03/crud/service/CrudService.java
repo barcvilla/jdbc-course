@@ -14,4 +14,7 @@ public interface CrudService {
     public String dropEmployeeTable();
     public int insertFixedEmployee();
     public void insertDynamicalEmployee(int eno, String ename, double esal, String eaddr);
+    public int insertMultipleRows(int eno, String ename, double esal, String eaddr);
+    public int updateFixedEmployee();
+    public int updateMultipleRows(double increment, double range);
 }

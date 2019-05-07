@@ -89,5 +89,52 @@ public class CrudImplementation implements CrudService{
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
+    @Override
+    public int insertMultipleRows(int eno, String ename, double esal, String eaddr) {
+        String query = "insert into employee values(" + eno + ", '" + ename + "', " + esal + ", '" + eaddr + "')";
+        //String query = String.format("insert into employee values(%d, '%s', %f,'%s')", eno, ename, esal, eaddr);
+        System.out.println("sql query: " + query);
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(query);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
+    }
+
+    @Override
+    public int updateFixedEmployee() {
+        sqlQuery = "update employee set esal = 777 where eno = 100";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
+    }
+
+    @Override
+    public int updateMultipleRows(double increment, double range) {
+        sqlQuery = "update employee set esal = esal + " + increment + " where esal <= " + range +" ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
+    }
     
 }

@@ -12,13 +12,14 @@ import jdbc.basic.ch03.crud.serviceimplementation.CrudImplementation;
  *
  * @author PC
  */
-public class InsertMultipleRows {
-
+public class InsertDynamicalRows {
+    
     public static void main(String[] args) {
         int updateCount = 0;
         CrudImplementation crud = new CrudImplementation();
-        Scanner input = new Scanner(System.in);
-        while (true) {
+        Scanner input = new Scanner(System.in); 
+        while(true)
+        {
             System.out.println("Employee Number:");
             int eno = input.nextInt();
             System.out.println("Employee Name:");
@@ -27,11 +28,13 @@ public class InsertMultipleRows {
             double esal = input.nextDouble();
             System.out.println("Employee Address:");
             String eaddr = input.next();
-            updateCount += crud.insertMultipleRows(eno, ename, esal, eaddr);
+            crud.insertDynamicalEmployee(eno, ename, esal, eaddr);
+            updateCount++;
             System.out.println("Number Record inserted successfully: " + updateCount);
             System.out.println("Do you want insert one more record [yes/no]");
             String option = input.next();
-            if (option.equalsIgnoreCase("No")) {
+            if(option.equalsIgnoreCase("No"))
+            {
                 break;
             }
         }
