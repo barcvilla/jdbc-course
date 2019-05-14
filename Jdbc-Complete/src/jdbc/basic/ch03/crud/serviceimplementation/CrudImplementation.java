@@ -9,9 +9,12 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.basic.ch02.DB.OracleConnection;
+import jdbc.basic.ch03.crud.domain.Employee;
 import jdbc.basic.ch03.crud.service.CrudService;
 
 /**
@@ -23,9 +26,15 @@ public class CrudImplementation implements CrudService{
     private OracleConnection oCon = new OracleConnection();
     private Statement stmt = null;
     private ResultSet rs = null;
+    private List<Employee> employees;
     private String sqlQuery = "";
     private String msg = "";
     private int updateCount = 0;
+    
+    public CrudImplementation()
+    {
+        employees = new ArrayList<Employee>();
+    }
 
     @Override
     public String createEmployeeTable() {
@@ -135,6 +144,65 @@ public class CrudImplementation implements CrudService{
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
+    }
+
+    @Override
+    public int deleteFixedEmployee() {
+        sqlQuery = "delete from employee where eno = 101";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
+    }
+
+    @Override
+    public int deleteMultipleRows(double salary) {
+        sqlQuery = "delete from employee where esal >= " + salary +" ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            updateCount = stmt.executeUpdate(sqlQuery);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
+    }
+
+    @Override
+    public List<Employee> getAllEmployees() {
+        sqlQuery = "select * from employee";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employees;
+    }
+
+    @Override
+    public List<Employee> getAllEmployeeOrderBySalary() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

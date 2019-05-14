@@ -5,6 +5,9 @@
  */
 package jdbc.basic.ch03.crud.service;
 
+import java.util.List;
+import jdbc.basic.ch03.crud.domain.Employee;
+
 /**
  *
  * @author PC
@@ -17,4 +20,8 @@ public interface CrudService {
     public int insertMultipleRows(int eno, String ename, double esal, String eaddr);
     public int updateFixedEmployee();
     public int updateMultipleRows(double increment, double range);
+    public int deleteFixedEmployee();
+    public int deleteMultipleRows(double salary);
+    public List<Employee> getAllEmployees();
+    public List<Employee> getAllEmployeeOrderBySalary();
 }
