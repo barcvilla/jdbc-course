@@ -24,4 +24,5 @@ public interface CrudService {
     public int deleteMultipleRows(double salary);
     public List<Employee> getAllEmployees();
     public List<Employee> getAllEmployeeOrderBySalary();
+    public List<Employee> getEmployeesByAddress(String eaddr);
 }

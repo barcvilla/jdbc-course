@@ -202,7 +202,50 @@ public class CrudImplementation implements CrudService{
 
     @Override
     public List<Employee> getAllEmployeeOrderBySalary() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        sqlQuery = "select * from employee order by esal DESC";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+           Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
+    }
+
+    @Override
+    public List<Employee> getEmployeesByAddress(String eaddr) {
+        sqlQuery = "select * from employee where eaddr = '" + eaddr + "' ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
     }
     
 }
