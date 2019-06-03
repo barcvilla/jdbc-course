@@ -15,15 +15,18 @@ import jdbc.basic.ch03.crud.serviceimplementation.CrudImplementation;
  *
  * @author PC
  */
-public class EmployeeListByAddress {
+public class EmployeeListBySalaryRange 
+{
     public static void main(String[] args) {
         boolean flag = false;
         CrudImplementation crud = new CrudImplementation();
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<Employee>();
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter city name");
-        String eaddr = input.nextLine();
-        employees = crud.getEmployeesByAddress(eaddr);
+        System.out.println("Enter begin Salary range");
+        double beginSalary = input.nextDouble();
+        System.out.println("Enter end Salary range");
+        double endSalary = input.nextDouble();
+        employees = crud.getEmployeesBySalaryRange(beginSalary, endSalary);
         for(Employee e : employees)
         {
             flag = true;
@@ -32,7 +35,8 @@ public class EmployeeListByAddress {
         
         if(flag == false)
         {
-            System.out.println("no matched record found");
+            System.out.println("no more record founds");
         }
     }
+            
 }

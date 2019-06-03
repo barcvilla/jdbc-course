@@ -25,4 +25,6 @@ public interface CrudService {
     public List<Employee> getAllEmployees();
     public List<Employee> getAllEmployeeOrderBySalary();
     public List<Employee> getEmployeesByAddress(String eaddr);
+    public List<Employee> getEmployeesBySalaryRange(double beginSalary, double endSalary);
+    public List<Employee> getEmployeesBasedInitialCharacter(String initialChar);
 }

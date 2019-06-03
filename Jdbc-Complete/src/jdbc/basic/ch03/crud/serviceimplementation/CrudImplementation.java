@@ -247,5 +247,53 @@ public class CrudImplementation implements CrudService{
         }
         return employees;
     }
+
+    @Override
+    public List<Employee> getEmployeesBySalaryRange(double beginSalary, double endSalary) {
+        sqlQuery = "select * from employee where esal >= " + beginSalary +" and esal <= "+ endSalary +" ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
+    }
+
+    @Override
+    public List<Employee> getEmployeesBasedInitialCharacter(String initialChar) {
+        sqlQuery = "select * from employee where ename like '"+initialChar+"' ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
+    }
     
 }

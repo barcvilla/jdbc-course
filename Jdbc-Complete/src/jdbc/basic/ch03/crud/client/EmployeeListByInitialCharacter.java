@@ -15,15 +15,16 @@ import jdbc.basic.ch03.crud.serviceimplementation.CrudImplementation;
  *
  * @author PC
  */
-public class EmployeeListByAddress {
+public class EmployeeListByInitialCharacter 
+{
     public static void main(String[] args) {
         boolean flag = false;
         CrudImplementation crud = new CrudImplementation();
-        List<Employee> employees = new ArrayList<>();
+        List<Employee> employees = new ArrayList<Employee>();
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter city name");
-        String eaddr = input.nextLine();
-        employees = crud.getEmployeesByAddress(eaddr);
+        System.out.println("Enter initial Character of Employee Name");
+        String initial = input.nextLine()+"%";
+        employees = crud.getEmployeesBasedInitialCharacter(initial);
         for(Employee e : employees)
         {
             flag = true;
@@ -32,7 +33,7 @@ public class EmployeeListByAddress {
         
         if(flag == false)
         {
-            System.out.println("no matched record found");
+            System.out.println("no more records found");
         }
     }
 }
