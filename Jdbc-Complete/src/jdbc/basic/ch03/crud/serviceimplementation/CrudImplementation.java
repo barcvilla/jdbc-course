@@ -295,5 +295,27 @@ public class CrudImplementation implements CrudService{
         }
         return employees;
     }
+
+    @Override
+    public List<Employee> getNameAndAddressEmployees() {
+        sqlQuery = "select ename, eaddr from employee";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            while(rs.next())
+            {
+                Employee emp = new Employee();
+                emp.setEname(rs.getString(1));
+                emp.setEaddr(rs.getString(2));
+                employees.add(emp);
+            }
+        }
+        catch(SQLException ex)
+        {
+           Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);  
+        }
+        return employees;
+    }
     
 }
