@@ -28,4 +28,6 @@ public interface CrudService {
     public List<Employee> getEmployeesBySalaryRange(double beginSalary, double endSalary);
     public List<Employee> getEmployeesBasedInitialCharacter(String initialChar);
     public List<Employee> getNameAndAddressEmployees();
+    public int getEmployeeCount();
+    public Employee getEmployeeMaxSalary();
 }

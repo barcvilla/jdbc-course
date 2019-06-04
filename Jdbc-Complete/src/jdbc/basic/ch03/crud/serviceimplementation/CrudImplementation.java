@@ -317,5 +317,51 @@ public class CrudImplementation implements CrudService{
         }
         return employees;
     }
+
+    @Override
+    public int getEmployeeCount() {
+        int count = 0;
+        sqlQuery = "select count(*) from employee";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            // cuando usamos aggregate function como count(*), MAX, MIN, AGV etc en lugar de usar while, usamos if
+            // porque un aggregate function siempre retorna un valor, es decir un resultset de una columna/fila
+            if(rs.next())
+            {
+                count = rs.getInt(1);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);  
+        }
+        return count;
+    }
     
+    @Override
+    public Employee getEmployeeMaxSalary()
+    {
+        Employee employee = null;
+        sqlQuery = "select eno, ename, eaddr, esal from employee where esal = (select max(esal) from employee)";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            if(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEaddr(rs.getString(3));
+                employee.setEsal(rs.getDouble(4));
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
 }
