@@ -32,4 +32,6 @@ public interface CrudService {
     public Employee getEmployeeMaxSalary();
     public Employee getEmployeeMinSalary();
     public Employee getEmployeeNThHighestSalaried(int rank);
+    public List<Employee> runSelectEmployeeQuery(String query);
+    public int runNonSelectEmployeeQuery(String query);
 }

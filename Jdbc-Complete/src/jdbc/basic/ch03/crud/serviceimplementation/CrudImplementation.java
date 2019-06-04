@@ -21,7 +21,8 @@ import jdbc.basic.ch03.crud.service.CrudService;
  *
  * @author PC
  */
-public class CrudImplementation implements CrudService{
+public class CrudImplementation implements CrudService {
+
     Employee employee = null;
     private OracleConnection oCon = new OracleConnection();
     private Statement stmt = null;
@@ -30,23 +31,19 @@ public class CrudImplementation implements CrudService{
     private String sqlQuery = "";
     private String msg = "";
     private int updateCount = 0;
-    
-    public CrudImplementation()
-    {
+
+    public CrudImplementation() {
         employees = new ArrayList<Employee>();
     }
 
     @Override
     public String createEmployeeTable() {
         sqlQuery = "create table employee(eno number, ename varchar2(10), esal number(10,2), eaddr varchar2(10))";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             stmt.executeUpdate(sqlQuery);
             msg = "Tabla Employee creada exitosamente";
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return msg;
@@ -55,14 +52,11 @@ public class CrudImplementation implements CrudService{
     @Override
     public String dropEmployeeTable() {
         sqlQuery = "drop table employee";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             stmt.executeUpdate(sqlQuery);
             msg = "Tabla Employee eliminada exitosamente";
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return msg;
@@ -71,13 +65,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public int insertFixedEmployee() {
         sqlQuery = "insert into employee values(300, 'Juan', 3000, 'BSAS')";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -88,13 +79,10 @@ public class CrudImplementation implements CrudService{
         sqlQuery = "insert into employee values(" + eno + ", '" + ename + "', " + esal + ", '" + eaddr + "')";
         //sqlQuery = String.format("insert into employee values(%d, '%s', %f, '%s')", eno, ename, esal, eaddr);
         System.out.println("query: " + sqlQuery);
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -104,13 +92,10 @@ public class CrudImplementation implements CrudService{
         String query = "insert into employee values(" + eno + ", '" + ename + "', " + esal + ", '" + eaddr + "')";
         //String query = String.format("insert into employee values(%d, '%s', %f,'%s')", eno, ename, esal, eaddr);
         System.out.println("sql query: " + query);
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(query);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -119,13 +104,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public int updateFixedEmployee() {
         sqlQuery = "update employee set esal = 777 where eno = 100";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -133,14 +115,11 @@ public class CrudImplementation implements CrudService{
 
     @Override
     public int updateMultipleRows(double increment, double range) {
-        sqlQuery = "update employee set esal = esal + " + increment + " where esal <= " + range +" ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        sqlQuery = "update employee set esal = esal + " + increment + " where esal <= " + range + " ";
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -149,13 +128,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public int deleteFixedEmployee() {
         sqlQuery = "delete from employee where eno = 101";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -163,14 +139,11 @@ public class CrudImplementation implements CrudService{
 
     @Override
     public int deleteMultipleRows(double salary) {
-        sqlQuery = "delete from employee where esal >= " + salary +" ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        sqlQuery = "delete from employee where esal >= " + salary + " ";
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             updateCount = stmt.executeUpdate(sqlQuery);
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return updateCount;
@@ -179,12 +152,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public List<Employee> getAllEmployees() {
         sqlQuery = "select * from employee";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEno(rs.getInt(1));
                 emp.setEname(rs.getString(2));
@@ -192,9 +163,7 @@ public class CrudImplementation implements CrudService{
                 emp.setEaddr(rs.getString(4));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
@@ -203,12 +172,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public List<Employee> getAllEmployeeOrderBySalary() {
         sqlQuery = "select * from employee order by esal DESC";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEno(rs.getInt(1));
                 emp.setEname(rs.getString(2));
@@ -216,10 +183,8 @@ public class CrudImplementation implements CrudService{
                 emp.setEaddr(rs.getString(4));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
-           Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
     }
@@ -227,12 +192,10 @@ public class CrudImplementation implements CrudService{
     @Override
     public List<Employee> getEmployeesByAddress(String eaddr) {
         sqlQuery = "select * from employee where eaddr = '" + eaddr + "' ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEno(rs.getInt(1));
                 emp.setEname(rs.getString(2));
@@ -240,23 +203,19 @@ public class CrudImplementation implements CrudService{
                 emp.setEaddr(rs.getString(4));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
-            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
     }
 
     @Override
     public List<Employee> getEmployeesBySalaryRange(double beginSalary, double endSalary) {
-        sqlQuery = "select * from employee where esal >= " + beginSalary +" and esal <= "+ endSalary +" ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        sqlQuery = "select * from employee where esal >= " + beginSalary + " and esal <= " + endSalary + " ";
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEno(rs.getInt(1));
                 emp.setEname(rs.getString(2));
@@ -264,23 +223,19 @@ public class CrudImplementation implements CrudService{
                 emp.setEaddr(rs.getString(4));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
-            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
     }
 
     @Override
     public List<Employee> getEmployeesBasedInitialCharacter(String initialChar) {
-        sqlQuery = "select * from employee where ename like '"+initialChar+"' ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        sqlQuery = "select * from employee where ename like '" + initialChar + "' ";
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEno(rs.getInt(1));
                 emp.setEname(rs.getString(2));
@@ -288,10 +243,8 @@ public class CrudImplementation implements CrudService{
                 emp.setEaddr(rs.getString(4));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
-            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
     }
@@ -299,21 +252,17 @@ public class CrudImplementation implements CrudService{
     @Override
     public List<Employee> getNameAndAddressEmployees() {
         sqlQuery = "select ename, eaddr from employee";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            while(rs.next())
-            {
+            while (rs.next()) {
                 Employee emp = new Employee();
                 emp.setEname(rs.getString(1));
                 emp.setEaddr(rs.getString(2));
                 employees.add(emp);
             }
-        }
-        catch(SQLException ex)
-        {
-           Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);  
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
     }
@@ -322,43 +271,34 @@ public class CrudImplementation implements CrudService{
     public int getEmployeeCount() {
         int count = 0;
         sqlQuery = "select count(*) from employee";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
             // cuando usamos aggregate function como count(*), MAX, MIN, AGV etc en lugar de usar while, usamos if
             // porque un aggregate function siempre retorna un valor, es decir un resultset de una columna/fila
-            if(rs.next())
-            {
+            if (rs.next()) {
                 count = rs.getInt(1);
             }
-        }
-        catch(SQLException ex)
-        {
-            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);  
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return count;
     }
-    
+
     @Override
-    public Employee getEmployeeMaxSalary()
-    {
+    public Employee getEmployeeMaxSalary() {
         sqlQuery = "select eno, ename, eaddr, esal from employee where esal = (select max(esal) from employee)";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            if(rs.next())
-            {
+            if (rs.next()) {
                 employee = new Employee();
                 employee.setEno(rs.getInt(1));
                 employee.setEname(rs.getString(2));
                 employee.setEaddr(rs.getString(3));
                 employee.setEsal(rs.getDouble(4));
             }
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employee;
@@ -367,21 +307,17 @@ public class CrudImplementation implements CrudService{
     @Override
     public Employee getEmployeeMinSalary() {
         sqlQuery = "select eno, ename, eaddr, esal from employee where esal = (select min(esal) from employee)";
-        try(Connection cnn = oCon.getConnection())
-        {
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            if(rs.next())
-            {
+            if (rs.next()) {
                 employee = new Employee();
                 employee.setEno(rs.getInt(1));
                 employee.setEname(rs.getString(2));
                 employee.setEaddr(rs.getString(3));
                 employee.setEsal(rs.getDouble(4));
             }
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employee;
@@ -389,25 +325,58 @@ public class CrudImplementation implements CrudService{
 
     @Override
     public Employee getEmployeeNThHighestSalaried(int rank) {
-        sqlQuery="select * from (select eno, ename, esal, eaddr, rank() over(order by esal DESC) "
-                + "ranking from employee) where ranking ="+ rank +" ";
-        try(Connection cnn = oCon.getConnection())
-        {
+        sqlQuery = "select * from (select eno, ename, esal, eaddr, rank() over(order by esal DESC) "
+                + "ranking from employee) where ranking =" + rank + " ";
+        try (Connection cnn = oCon.getConnection()) {
             stmt = cnn.createStatement();
             rs = stmt.executeQuery(sqlQuery);
-            if(rs.next())
-            {
+            if (rs.next()) {
                 employee = new Employee();
                 employee.setEno(rs.getInt(1));
                 employee.setEname(rs.getString(2));
                 employee.setEsal(rs.getDouble(3));
                 employee.setEaddr(String.valueOf(rs.getString(5)));
             }
-        }
-        catch(SQLException ex)
-        {
+        } catch (SQLException ex) {
             Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employee;
+    }
+
+    @Override
+    public List<Employee> runSelectEmployeeQuery(String query) {
+        try (Connection cnn = oCon.getConnection()) {
+            stmt = cnn.createStatement();
+            boolean test = stmt.execute(query);
+
+            rs = stmt.getResultSet();
+            while (rs.next()) {
+                Employee emp = new Employee();
+                emp.setEno(rs.getInt(1));
+                emp.setEname(rs.getString(2));
+                emp.setEsal(rs.getDouble(3));
+                emp.setEaddr(rs.getString(4));
+                employees.add(emp);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employees;
+    }
+
+    @Override
+    public int runNonSelectEmployeeQuery(String query) {
+        try (Connection cnn = oCon.getConnection()) {
+            stmt = cnn.createStatement();
+            boolean test = stmt.execute(query);
+            if (test == false) // non select query
+            {
+                updateCount = stmt.getUpdateCount();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
     }
 }
