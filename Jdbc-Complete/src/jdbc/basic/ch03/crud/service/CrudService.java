@@ -30,4 +30,6 @@ public interface CrudService {
     public List<Employee> getNameAndAddressEmployees();
     public int getEmployeeCount();
     public Employee getEmployeeMaxSalary();
+    public Employee getEmployeeMinSalary();
+    public Employee getEmployeeNThHighestSalaried(int rank);
 }

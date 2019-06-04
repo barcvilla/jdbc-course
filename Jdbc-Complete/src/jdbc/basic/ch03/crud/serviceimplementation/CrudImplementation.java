@@ -22,7 +22,7 @@ import jdbc.basic.ch03.crud.service.CrudService;
  * @author PC
  */
 public class CrudImplementation implements CrudService{
-    
+    Employee employee = null;
     private OracleConnection oCon = new OracleConnection();
     private Statement stmt = null;
     private ResultSet rs = null;
@@ -343,7 +343,6 @@ public class CrudImplementation implements CrudService{
     @Override
     public Employee getEmployeeMaxSalary()
     {
-        Employee employee = null;
         sqlQuery = "select eno, ename, eaddr, esal from employee where esal = (select max(esal) from employee)";
         try(Connection cnn = oCon.getConnection())
         {
@@ -356,6 +355,53 @@ public class CrudImplementation implements CrudService{
                 employee.setEname(rs.getString(2));
                 employee.setEaddr(rs.getString(3));
                 employee.setEsal(rs.getDouble(4));
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
+
+    @Override
+    public Employee getEmployeeMinSalary() {
+        sqlQuery = "select eno, ename, eaddr, esal from employee where esal = (select min(esal) from employee)";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            if(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEaddr(rs.getString(3));
+                employee.setEsal(rs.getDouble(4));
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(CrudImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
+
+    @Override
+    public Employee getEmployeeNThHighestSalaried(int rank) {
+        sqlQuery="select * from (select eno, ename, esal, eaddr, rank() over(order by esal DESC) "
+                + "ranking from employee) where ranking ="+ rank +" ";
+        try(Connection cnn = oCon.getConnection())
+        {
+            stmt = cnn.createStatement();
+            rs = stmt.executeQuery(sqlQuery);
+            if(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEsal(rs.getDouble(3));
+                employee.setEaddr(String.valueOf(rs.getString(5)));
             }
         }
         catch(SQLException ex)
