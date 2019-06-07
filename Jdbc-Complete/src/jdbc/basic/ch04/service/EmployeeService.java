@@ -14,4 +14,6 @@ import jdbc.basic.ch04.domain.Employee;
  */
 public interface EmployeeService {
     public List<Employee> getAllEmployees();
+    public void insertEmployee(Employee employee);
+    public int deleteEmployee(int id);
 }

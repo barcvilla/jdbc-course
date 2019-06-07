@@ -6,6 +6,7 @@
 package jdbc.basic.ch04.service;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -26,6 +27,7 @@ public class EmployeeServiceImplementation implements EmployeeService
     private List<Employee> employees;
     private MysqlConnection mysqlCon = new MysqlConnection();
     private Statement stmt = null;
+    private PreparedStatement pstmt = null;
     private ResultSet rs = null;
     private String sqlQuery = "";
     private int updateCount = 0;
@@ -57,6 +59,40 @@ public class EmployeeServiceImplementation implements EmployeeService
             Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
+    }
+
+    @Override
+    public void insertEmployee(Employee employee) {
+        sqlQuery = "insert into employees values(?, ?, ?, ?)";
+        try(Connection cnn = mysqlCon.getConnection())
+        {
+            pstmt = cnn.prepareStatement(sqlQuery);
+            pstmt.setInt(1, employee.getEno());
+            pstmt.setString(2, employee.getEname());
+            pstmt.setDouble(3, employee.getEsal());
+            pstmt.setString(4, employee.getEaddr());
+            pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public int deleteEmployee(int id) {
+        sqlQuery = "delete from employees where eno = ?";
+        try(Connection cnn = mysqlCon.getConnection())
+        {
+            pstmt = cnn.prepareStatement(sqlQuery);
+            pstmt.setInt(1, id);
+            updateCount = pstmt.executeUpdate();
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return updateCount;
     }
     
 }
