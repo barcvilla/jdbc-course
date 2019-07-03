@@ -1,0 +1,24 @@
+Mapping Java types to DataBase types by using JDBC "Bridge" Types
+=================================================================
+
+Jdbc Types: Permite hace un mapeo de los tipos de datos de java con los tipos de datos del motor de base de datos
+para una optima manipulacion
+
+Java            Jdbc DataType       Oracle
+int             Types.INTEGER       number
+String          Types.VARCHAR       varchar, varchar2
+float           Types.FLOAT         number
+java.sql.Date   Types.DATE          date
+
+
+Process to call StoredProcedure from Java App
+=============================================
+
+1. El SP debe estar listo en la BD
+2. Crear el objeto CallableStatement 
+3. Proveer los valores para cada parametro IN
+4. Registrar cada parametro OUT con JDBC Types
+5. Execute procedure call
+6. obtener los resultados.
+
+
