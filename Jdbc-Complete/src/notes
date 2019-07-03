@@ -22,3 +22,15 @@ Process to call StoredProcedure from Java App
 6. obtener los resultados.
 
 
+CURSORES EN ORACLE
+==================
+
+Permite acceder a los objetos de una consulta almacenada en el context area de la BD
+
+Tipo de Cursores
+1. Cursor implicito: son cursores creados automaticamente por la BD. Cursor implicito en Oracle:
+    1.1 SYS_REFCURSOR: Es utilizado para contener los resultado de un select query
+    1.2 %ROWCOUNT: Es utilizado para contener los resultados de un non select query (insert/delete/update)
+    1.3 %FOUND: Es utilizado para verificar alguna fila fue afectada por el query ejecutado. Se aplica para non query
+2. Cursor explicito: son cursores creados por el programador para contener un resultado de una consulta particular
+
