@@ -73,5 +73,27 @@ public class EmployeeServiceImplementation implements EmployeeService{
         }
         return 0;
     }
+
+    @Override
+    public Employee getEmployeeNameAndSalary(int id) {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("{call getEmpInfo(?,?,?)}");
+            cstmt.setInt(1, id);
+            cstmt.registerOutParameter(2, Types.VARCHAR);
+            cstmt.registerOutParameter(3, Types.FLOAT);
+            cstmt.execute();
+            employee = new Employee();
+            employee.setEno(id);
+            employee.setEname(cstmt.getString(2));
+            employee.setEsal(cstmt.getFloat(3));
+            employee.setEaddr(null);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employee;
+    }
     
 }

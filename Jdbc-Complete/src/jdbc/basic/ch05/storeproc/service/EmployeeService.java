@@ -5,6 +5,8 @@
  */
 package jdbc.basic.ch05.storeproc.service;
 
+import jdbc.basic.ch05.storeproc.domain.Employee;
+
 /**
  *
  * @author PC
@@ -12,4 +14,5 @@ package jdbc.basic.ch05.storeproc.service;
 public interface EmployeeService {
     public int getSumNumberProcedure(int num1, int num2);
     public double getEmployeeSalary(int id);
+    public Employee getEmployeeNameAndSalary(int id);
 }
