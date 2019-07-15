@@ -16,12 +16,19 @@ import jdbc.basic.ch05.storeproc.service.EmployeeServiceImplementation;
  */
 public class spGetEmployeeWithCursor {
     public static void main(String[] args) {
+        boolean flag = false;
         System.out.println("Get all Employee using Oracle Cursor");
         EmployeeService service = new EmployeeServiceImplementation();
         List<Employee> employees = service.getEmployees();
         for(Employee e : employees)
         {
+            flag = true;
             System.out.println("id: " + e.getEno() + " name: " + e.getEname() + " salary: " + e.getEsal());
+        }
+        
+        if(flag == false)
+        {
+            System.out.println("No records available");
         }
     }
 }

@@ -34,3 +34,6 @@ Tipo de Cursores
     1.3 %FOUND: Es utilizado para verificar alguna fila fue afectada por el query ejecutado. Se aplica para non query
 2. Cursor explicito: son cursores creados por el programador para contener un resultado de una consulta particular
 
+FUNCIONES EN ORACLE
+===================
+

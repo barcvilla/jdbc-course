@@ -31,7 +31,7 @@ public class EmployeeServiceImplementation implements EmployeeService{
     private OracleConnection oracleCon = new OracleConnection();
     private CallableStatement cstmt = null;
     private int resultNum = 0;
-    private double salary = 0.0;
+    private double salary = 0;
     
     public EmployeeServiceImplementation()
     {
@@ -124,6 +124,22 @@ public class EmployeeServiceImplementation implements EmployeeService{
             Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employees;
+    }
+
+    @Override
+    public double getEmployeeSalaryAvg() {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("{?=call getSalaryAvg}");
+            cstmt.registerOutParameter(1, Types.DOUBLE);
+            cstmt.execute();
+            salary = cstmt.getDouble(1);
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return salary;
     }
     
 }
