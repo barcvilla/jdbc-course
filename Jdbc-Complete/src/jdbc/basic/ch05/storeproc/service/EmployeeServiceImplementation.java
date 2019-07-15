@@ -8,6 +8,7 @@ package jdbc.basic.ch05.storeproc.service;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.basic.ch05.storeproc.db.OracleConnection;
 import jdbc.basic.ch05.storeproc.domain.Employee;
+import oracle.jdbc.OracleType;
+import oracle.jdbc.OracleTypes;
 
 /**
  *
@@ -24,6 +27,7 @@ import jdbc.basic.ch05.storeproc.domain.Employee;
 public class EmployeeServiceImplementation implements EmployeeService{
     private Employee employee = null;
     private List<Employee> employees;
+    private ResultSet rs = null;
     private OracleConnection oracleCon = new OracleConnection();
     private CallableStatement cstmt = null;
     private int resultNum = 0;
@@ -94,6 +98,32 @@ public class EmployeeServiceImplementation implements EmployeeService{
             Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
         }
         return employee;
+    }
+
+    @Override
+    public List<Employee> getEmployees() {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("call getEmployee(?)");
+            cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            cstmt.execute();
+            rs = (ResultSet)cstmt.getObject(1);
+            employees = new ArrayList<>();
+            while(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEsal(rs.getDouble(3));
+                employee.setEaddr(rs.getString(4));
+                employees.add(employee);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return employees;
     }
     
 }
