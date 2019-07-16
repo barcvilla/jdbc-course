@@ -141,5 +141,23 @@ public class EmployeeServiceImplementation implements EmployeeService{
         }
         return salary;
     }
+
+    @Override
+    public double getSalaryAvg(int id1, int id2) {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("{?=call getAvg(?,?)}"); 
+            cstmt.setInt(2, id1);
+            cstmt.setInt(3, id2);
+            cstmt.registerOutParameter(1, Types.DOUBLE);
+            cstmt.execute();
+            salary = cstmt.getDouble(1);
+        }
+        catch(SQLException ex)
+        {
+           Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return salary;
+    }
     
 }

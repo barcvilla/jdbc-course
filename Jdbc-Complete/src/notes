@@ -37,3 +37,5 @@ Tipo de Cursores
 FUNCIONES EN ORACLE
 ===================
 
+Las funciones son objetos en oracle que retornan un resultado explicitamente. A diferencia de los procedure los cuales
+pueden o no retornar un valor explicito.

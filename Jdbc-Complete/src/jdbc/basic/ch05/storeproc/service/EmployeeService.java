@@ -17,5 +17,6 @@ public interface EmployeeService {
     public double getEmployeeSalary(int id);
     public Employee getEmployeeNameAndSalary(int id);
     public List<Employee> getEmployees();
+    public double getSalaryAvg(int id1, int id2);
     public double getEmployeeSalaryAvg();
 }
