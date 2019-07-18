@@ -7,7 +7,6 @@ package jdbc.basic.ch05.storeproc.service;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
@@ -17,7 +16,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.basic.ch05.storeproc.db.OracleConnection;
 import jdbc.basic.ch05.storeproc.domain.Employee;
-import oracle.jdbc.OracleType;
 import oracle.jdbc.OracleTypes;
 
 /**
@@ -158,6 +156,60 @@ public class EmployeeServiceImplementation implements EmployeeService{
            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex); 
         }
         return salary;
+    }
+
+    @Override
+    public List<Employee> getAllEmployeeInfo() {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("{?=call getAllEmployeeInfo}");
+            cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            cstmt.execute();
+            rs = (ResultSet)cstmt.getObject(1);
+            employees = new ArrayList<Employee>();
+            while(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEsal(rs.getDouble(3));
+                employee.setEaddr(rs.getString(4));
+                employees.add(employee);
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
+    }
+
+    @Override
+    public List<Employee> deleteEmployee(int id) {
+        try(Connection cnn = oracleCon.getConnection())
+        {
+            cstmt = cnn.prepareCall("{?=call getDeleteEmployee(?,?)}");
+            cstmt.setInt(2, id);
+            cstmt.registerOutParameter(1, OracleTypes.CURSOR);
+            cstmt.registerOutParameter(3, Types.INTEGER);
+            cstmt.execute();
+            rs = (ResultSet) cstmt.getObject(1);
+            employees = new ArrayList<Employee>();
+            while(rs.next())
+            {
+                employee = new Employee();
+                employee.setEno(rs.getInt(1));
+                employee.setEname(rs.getString(2));
+                employee.setEsal(rs.getDouble(3));
+                employee.setEaddr(rs.getString(4));
+                employees.add(employee);
+            }
+        }
+        catch(SQLException ex)
+        {
+           Logger.getLogger(EmployeeServiceImplementation.class.getName()).log(Level.SEVERE, null, ex); 
+        }
+        return employees;
     }
     
 }

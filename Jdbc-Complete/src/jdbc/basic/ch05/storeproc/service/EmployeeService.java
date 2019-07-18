@@ -19,4 +19,6 @@ public interface EmployeeService {
     public List<Employee> getEmployees();
     public double getSalaryAvg(int id1, int id2);
     public double getEmployeeSalaryAvg();
+    public List<Employee> getAllEmployeeInfo();
+    public List<Employee> deleteEmployee(int id);
 }
