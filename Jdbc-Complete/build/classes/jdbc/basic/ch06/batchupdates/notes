@@ -1,0 +1,12 @@
+BATCH UPDATES
+
+Consiste en agrupar un determinado numero de consultas y enviarlas como una unidad hacia una BD. Con este mecanismo
+el desempeño de la app será óptimo y el tráfico de la red será reducido.
+
+Ventajas
+1. Mejora del desempeño
+2. Reducion del tráfico en la red
+
+Desventajas
+1. Batch update solo aplicable para non selected queries (insert, update, delete)
+2. Si en un bloque de queries una consulta falla el resto del bloque no se realizara

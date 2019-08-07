@@ -39,3 +39,20 @@ FUNCIONES EN ORACLE
 
 Las funciones son objetos en oracle que retornan un resultado explicitamente. A diferencia de los procedure los cuales
 pueden o no retornar un valor explicito.
+
+JDBC EXECUTE METHODS
+====================
+
+1. executeQuery(): Puede ser utilizado para ejecutar selected queries. Ejemplo
+    ResultSet rs = stmt.executeQuery("select * from employee");
+
+2. executeUpdate(): Lo utilizamos para la ejecucion de non selected queries y recibimos el numero de registros afectados.
+    int updateCount = stmt.executeUpdate("insert/update/delete query");
+
+3. execute(): Lo utilizamos cuando no sabemos que tipo de query se realizara (selected or non selected query). Por ejemplo 
+    el usuario construye su propia consulta pudiendo ser un select o un insert, update, delete.
+    boolean r = stmt.execute("select/non select query");
+    La variable boolean r retornara true cuando se trata de un select query / false de lo contrario.
+    if(r == true) ResultSet rs = stmt.getResultSet();
+    else int updateCount = stmt.getUpdateCount();
+4. executeBatch()

@@ -18,6 +18,14 @@ public class Employee
 
     public Employee() {
     }
+    
+    public Employee(int eno, String ename, double esal, String eaddr)
+    {
+        setEno(eno);
+        setEname(ename);
+        setEsal(esal);
+        setEaddr(eaddr);
+    }
 
     public int getEno() {
         return eno;
