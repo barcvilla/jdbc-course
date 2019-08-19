@@ -1,0 +1,10 @@
+Working with Date values in a DataBase
+
+Consideraciones de BD en el formato de fechas
+
+Oracle: dd-mmm-yy (28-ago-19)
+Mysql: yyyy-mm-dd (2019-08-19)
+
+
+
+
