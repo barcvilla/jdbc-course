@@ -5,10 +5,14 @@
  */
 package jdbc.basic.ch07.date;
 
+import java.util.List;
+
 /**
  *
  * @author PC
  */
 public interface UserService {
-    public void insertUser(User user);
+    public int insertUser(User user);
+    public int insertUser2(User u);
+    public List<User> getAllUser();
 }

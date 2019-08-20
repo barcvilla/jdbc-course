@@ -5,18 +5,16 @@
  */
 package jdbc.basic.ch07.date;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.Scanner;
 
 /**
  *
  * @author PC
  */
-public class App {
-    public static void main(String[] args)throws Exception  {
-        UserService userService = new UserImpl();
+public class App2 {
+    public static void main(String[] args) {
+        UserService service = new UserImpl();
         
         Scanner input = new Scanner(System.in);
         System.out.println("Ingrese nombre: ");
@@ -24,13 +22,10 @@ public class App {
         System.out.println("Ingrese DOP (dd-MM-yyyy)");
         String dop = input.next();
         
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-        Date udate = sdf.parse(dop);
-        long dt = udate.getTime();
-        java.sql.Date sDate = new java.sql.Date(dt);
+        Date sdate = Date.valueOf(dop);
+        User user = new User(name, sdate);
+        int rc = service.insertUser2(user);
         
-        User user = new User(name, sDate);
-        int rc = userService.insertUser(user);
         if(rc == 0)
         {
             System.out.println("Usuario no registrado");
