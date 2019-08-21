@@ -6,6 +6,7 @@
 package jdbc.basic.ch07.lobs;
 
 import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  *

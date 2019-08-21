@@ -1,0 +1,4 @@
+LOBS / BLOBS
+
+Para leer los bytes desde un archivo utilizamos la clase InputStream
+Para escribir los bytes hacia un archivo utilizamos la clase OutputStream

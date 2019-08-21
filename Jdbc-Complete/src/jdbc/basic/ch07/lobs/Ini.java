@@ -12,7 +12,7 @@ import java.io.File;
  * @author PC
  */
 public class Ini {
-    private static final String PROPERTY_FILE1 = "Java_Developer_profile.jpg";
+    private static final String PROPERTY_FILE1 = "perfil.jpg";
     private static final String PROPERTY_FILE2 = "Admiral.properties";
     private static final String PROPERTY_FILE3 = "javatestfile.txt";
     private static String path = "";

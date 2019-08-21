@@ -5,10 +5,13 @@
  */
 package jdbc.basic.ch07.lobs;
 
+import java.util.List;
+
 /**
  *
  * @author PC
  */
 public interface PersonService {
     public int insertPerson(Persons p);
+    public void getPersonsImage(String name) throws Exception;
 }
