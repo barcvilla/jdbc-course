@@ -9,7 +9,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.InputStream;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -89,6 +91,34 @@ public class PersonServiceImpl implements PersonService{
             Logger.getLogger(PersonServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
         return rc;
+    }
+
+    @Override
+    public String getCitiesFile(String file) throws Exception {
+        String name = "";
+        try(Connection cnn = oracleConn.getConnection())
+        {
+            pstmt = cnn.prepareStatement("select * from cities where country = ?");
+            pstmt.setString(1, file);
+            rs = pstmt.executeQuery();
+            FileWriter fw = new FileWriter(file);
+            if(rs.next())
+            {
+                name = rs.getString(1);
+                Reader r = rs.getCharacterStream(2);
+                int i = r.read();
+                while(i != -1)
+                {
+                    fw.write(i);
+                    i = r.read();
+                }
+                fw.flush();
+            }
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(PersonServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
     }
     
 }
