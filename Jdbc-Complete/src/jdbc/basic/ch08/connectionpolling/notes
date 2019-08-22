@@ -1,0 +1,5 @@
+Proceso para implementar el Connection Pooling
+
+1. Creacion del DataSource: El DataSource es el responsable de administrar el pool de conexiones
+
+

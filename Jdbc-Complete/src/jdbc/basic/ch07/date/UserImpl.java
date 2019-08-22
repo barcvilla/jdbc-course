@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jdbc.basic.ch05.storeproc.db.OracleConnection;
+import jdbc.basic.ch08.connectionpolling.MyOracleDataSource;
 
 /**
  *
@@ -23,7 +24,7 @@ public class UserImpl implements UserService{
     List<User> users = null;
     User user = null;
     int rc = 0;
-    private OracleConnection oracleConn = new OracleConnection();
+    private MyOracleDataSource oracleConn = new MyOracleDataSource();
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
 
