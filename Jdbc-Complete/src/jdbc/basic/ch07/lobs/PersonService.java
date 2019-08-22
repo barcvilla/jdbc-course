@@ -5,6 +5,7 @@
  */
 package jdbc.basic.ch07.lobs;
 
+import java.io.File;
 import java.util.List;
 
 /**
@@ -14,4 +15,5 @@ import java.util.List;
 public interface PersonService {
     public int insertPerson(Persons p);
     public void getPersonsImage(String name) throws Exception;
+    public int loadCityFile(File file) throws Exception;
 }

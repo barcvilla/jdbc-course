@@ -5,8 +5,10 @@
  */
 package jdbc.basic.ch07.lobs;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -29,6 +31,7 @@ public class PersonServiceImpl implements PersonService{
     private ResultSet rs = null;
     private Persons p = null;
     private InputStream is = null;
+    private FileReader fr = null;
     private FileOutputStream fos = null;
     private List<Persons> persons = null;
     int rc = 0;
@@ -70,6 +73,22 @@ public class PersonServiceImpl implements PersonService{
         catch (SQLException ex) {
             Logger.getLogger(PersonServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public int loadCityFile(File file) throws Exception {
+        try(Connection cnn = oracleConn.getConnection())
+        {
+            pstmt = cnn.prepareStatement("insert into cities values(?, ?)");
+            pstmt.setString(1, file.getName());
+            fr = new FileReader(file);
+            pstmt.setCharacterStream(2, fr);
+            rc = pstmt.executeUpdate();
+        }
+        catch (SQLException ex) {
+            Logger.getLogger(PersonServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rc;
     }
     
 }
