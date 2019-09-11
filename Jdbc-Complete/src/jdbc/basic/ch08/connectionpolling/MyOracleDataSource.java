@@ -7,8 +7,10 @@ package jdbc.basic.ch08.connectionpolling;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import jdbc.basic.ch09.properties.IniFile;
 import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 
 /**
@@ -18,13 +20,25 @@ import oracle.jdbc.pool.OracleConnectionPoolDataSource;
 public class MyOracleDataSource {
     Connection cnn = null;
     OracleConnectionPoolDataSource ds = null;
+    Properties prop = null;
+    IniFile ini = null;
     
     public Connection getConnection()
     {
+        /**
         String url = "jdbc:oracle:thin:@localhost:1521:XE";
         String driver = "oracle.jdbc.OracleDriver";
         String user = "sys as sysdba";
         String password = "admin";
+        */
+        prop = new Properties();
+        ini = new IniFile();
+        prop = ini.getPropertyFile();
+        
+        String url = prop.getProperty("url");
+        String driver = prop.getProperty("driver");
+        String user = prop.getProperty("user");
+        String password = prop.getProperty("password");
         
         try
         {
@@ -32,7 +46,7 @@ public class MyOracleDataSource {
             ds.setURL(url);
             ds.setUser(user);
             ds.setPassword(password);
-            cnn =  ds.getConnection();
+            cnn = ds.getConnection();
         }
         catch(SQLException ex)
         {
