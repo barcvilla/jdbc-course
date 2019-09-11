@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 public class IniFile {
     private static final String PROPERTY_FILE = "db.properties";
     
-    public Properties getPropertyFile()
+    public static Properties getPropertyFile()
     {
         Properties prop = new Properties();
         try

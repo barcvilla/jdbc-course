@@ -1,0 +1,11 @@
+TRANSACCIONES
+
+CATEGORIAS
+
+1. Local Transactions: Las operaciones son realizadas en la misma BD
+2. Global Transactions: Las operaciones son realizadas en diferentes BD
+
+JDBC suporta solo Transacciones locales, si necesitamos abarcar transacciones globales debemos apoyarnos en EJB y Spring
+
+
+

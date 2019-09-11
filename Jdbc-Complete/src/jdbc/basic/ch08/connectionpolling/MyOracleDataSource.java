@@ -21,7 +21,7 @@ public class MyOracleDataSource {
     Connection cnn = null;
     OracleConnectionPoolDataSource ds = null;
     Properties prop = null;
-    IniFile ini = null;
+    
     
     public Connection getConnection()
     {
@@ -32,8 +32,7 @@ public class MyOracleDataSource {
         String password = "admin";
         */
         prop = new Properties();
-        ini = new IniFile();
-        prop = ini.getPropertyFile();
+        prop = IniFile.getPropertyFile();
         
         String url = prop.getProperty("url");
         String driver = prop.getProperty("driver");
