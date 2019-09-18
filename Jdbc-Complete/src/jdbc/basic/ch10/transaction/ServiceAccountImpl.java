@@ -52,13 +52,10 @@ public class ServiceAccountImpl implements ServiceAccount{
         try(Connection cnn = oracleConn.getConnection())
         {
             cnn.setAutoCommit(false);
-            pstmt = cnn.prepareStatement("update accounts set balance = balance - '" + user.getAmount() +"'");
+            pstmt = cnn.prepareStatement("update accounts set balance = balance - '" + user.getAmount() +"' where name = '" + user.getName() + "' ");
+            pstmt.executeUpdate();
             pstmt = cnn.prepareStatement("select * from accounts where name = '" + user.getName() + "' ");
             rs = pstmt.executeQuery();
-            while(rs.next())
-            {
-                user = new UserBalance(rs.getString(1), rs.getInt(2));
-            }
             if(opt)
             {
                 cnn.commit();
@@ -66,6 +63,10 @@ public class ServiceAccountImpl implements ServiceAccount{
             else
             {
                 cnn.rollback();
+            }
+            while(rs.next())
+            {
+                user = new UserBalance(rs.getString(1), rs.getInt(2));
             }
         }
         catch(SQLException ex)
@@ -77,6 +78,30 @@ public class ServiceAccountImpl implements ServiceAccount{
 
     @Override
     public UserBalance deposit(UserBalance user, boolean opt) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try(Connection cnn = oracleConn.getConnection())
+        {
+            cnn.setAutoCommit(false);
+            pstmt = cnn.prepareStatement("update accounts set balance = balance + '" + user.getAmount() + "' where name = '"+ user.getName() + "' ");
+            pstmt.executeUpdate();
+            pstmt = cnn.prepareStatement("select * from accounts where name ='"+ user.getName() +"' ");
+            rs = pstmt.executeQuery();
+            if(opt)
+            {
+                cnn.commit();
+            }
+            else
+            {
+                cnn.rollback();
+            }
+            while(rs.next())
+            {
+                user = new UserBalance(rs.getString(1), rs.getInt(2));
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(ServiceAccountImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
 }
