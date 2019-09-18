@@ -12,6 +12,7 @@ import java.util.List;
  * @author PC
  */
 public interface ServiceAccount {
+    public UserBalance getBalance(String name);
     public List<UserBalance> getAllBalances();
     public UserBalance withDraw(UserBalance user, boolean opt);
     public UserBalance deposit(UserBalance user, boolean opt);

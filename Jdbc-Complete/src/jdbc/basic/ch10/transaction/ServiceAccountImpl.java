@@ -26,7 +26,7 @@ public class ServiceAccountImpl implements ServiceAccount{
     private MyOracleDataSource oracleConn = new MyOracleDataSource();
     private PreparedStatement pstmt = null;
     private ResultSet rs = null;
-
+    
     @Override
     public List<UserBalance> getAllBalances() {
         try(Connection cnn = oracleConn.getConnection())
@@ -83,8 +83,7 @@ public class ServiceAccountImpl implements ServiceAccount{
             cnn.setAutoCommit(false);
             pstmt = cnn.prepareStatement("update accounts set balance = balance + '" + user.getAmount() + "' where name = '"+ user.getName() + "' ");
             pstmt.executeUpdate();
-            pstmt = cnn.prepareStatement("select * from accounts where name ='"+ user.getName() +"' ");
-            rs = pstmt.executeQuery();
+            
             if(opt)
             {
                 cnn.commit();
@@ -93,6 +92,22 @@ public class ServiceAccountImpl implements ServiceAccount{
             {
                 cnn.rollback();
             }
+            user = getBalance(user.getName());
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(ServiceAccountImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
+    }
+
+    @Override
+    public UserBalance getBalance(String name) {
+        try(Connection cnn = oracleConn.getConnection())
+        {
+            pstmt = cnn.prepareStatement("select * from accounts where name = ?");
+            pstmt.setString(1, name);
+            rs = pstmt.executeQuery();
             while(rs.next())
             {
                 user = new UserBalance(rs.getString(1), rs.getInt(2));
