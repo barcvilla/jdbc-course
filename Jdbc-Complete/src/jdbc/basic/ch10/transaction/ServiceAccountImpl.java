@@ -48,12 +48,35 @@ public class ServiceAccountImpl implements ServiceAccount{
     }
 
     @Override
-    public int withDraw(UserBalance user) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public UserBalance withDraw(UserBalance user, boolean opt) {
+        try(Connection cnn = oracleConn.getConnection())
+        {
+            cnn.setAutoCommit(false);
+            pstmt = cnn.prepareStatement("update accounts set balance = balance - '" + user.getAmount() +"'");
+            pstmt = cnn.prepareStatement("select * from accounts where name = '" + user.getName() + "' ");
+            rs = pstmt.executeQuery();
+            while(rs.next())
+            {
+                user = new UserBalance(rs.getString(1), rs.getInt(2));
+            }
+            if(opt)
+            {
+                cnn.commit();
+            }
+            else
+            {
+                cnn.rollback();
+            }
+        }
+        catch(SQLException ex)
+        {
+            Logger.getLogger(ServiceAccountImpl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return user;
     }
 
     @Override
-    public int deposit(UserBalance user) {
+    public UserBalance deposit(UserBalance user, boolean opt) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

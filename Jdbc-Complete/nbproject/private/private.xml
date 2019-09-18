@@ -2,6 +2,12 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects-9/jdbc/Jdbc-Complete/src/jdbc/basic/ch10/transaction/ServiceAccount.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects-9/jdbc/Jdbc-Complete/src/jdbc/basic/ch10/transaction/ServiceAccountImpl.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects-9/jdbc/Jdbc-Complete/src/jdbc/basic/ch10/transaction/App1.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects-9/jdbc/Jdbc-Complete/src/jdbc/basic/ch10/transaction/UserBalance.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects-9/jdbc/Jdbc-Complete/src/jdbc/basic/ch07/date/UserImpl.java</file>
+        </group>
     </open-files>
 </project-private>

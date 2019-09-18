@@ -13,6 +13,6 @@ import java.util.List;
  */
 public interface ServiceAccount {
     public List<UserBalance> getAllBalances();
-    public int withDraw(UserBalance user);
-    public int deposit(UserBalance user);
+    public UserBalance withDraw(UserBalance user, boolean opt);
+    public UserBalance deposit(UserBalance user, boolean opt);
 }

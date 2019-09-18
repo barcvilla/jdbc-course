@@ -11,12 +11,12 @@ package jdbc.basic.ch10.transaction;
  */
 public class UserBalance {
     private String name;
-    private int balance;
+    private int amount;
     
-    public UserBalance(String name, int balance)
+    public UserBalance(String name, int amount)
     {
         this.name = name;
-        this.balance = balance;
+        this.amount = amount;
     }
 
     public String getName() {
@@ -27,17 +27,17 @@ public class UserBalance {
         this.name = name;
     }
 
-    public int getBalance() {
-        return balance;
+    public int getAmount() {
+        return amount;
     }
 
-    public void setBalance(int balance) {
-        this.balance = balance;
+    public void setAmount(int amount) {
+        this.amount = amount;
     }
 
     @Override
     public String toString() {
-        return "UserBalance{" + "name=" + name + ", balance=" + balance + '}';
+        return "UserBalance{" + "name=" + name + ", amount=" + amount + '}';
     }
     
 }
